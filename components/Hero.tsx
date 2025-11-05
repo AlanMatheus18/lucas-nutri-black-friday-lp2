@@ -173,7 +173,7 @@ const Hero: React.FC = () => {
                                             onChange={handleInputChange}
                                             aria-invalid={!!errors.whatsapp}
                                             aria-describedby={errors.whatsapp ? "whatsapp-error" : undefined}
-                                            className={`w-full bg-white/2 border-2 rounded-lg p-4 text-white placeholder-gray-400 transition ${errors.whatsapp
+                                            className={`w-full bg-white/2 border-2 rounded-lg p-4 text-black placeholder-gray-400 transition ${errors.whatsapp
                                                     ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
                                                     : 'border-white/20 focus:ring-brand-green focus:border-brand-green'
                                                 }`}
@@ -194,7 +194,7 @@ const Hero: React.FC = () => {
                                             onChange={handleInputChange}
                                             aria-invalid={!!errors.email}
                                             aria-describedby={errors.email ? "email-error" : undefined}
-                                            className={`w-full bg-white/2 border-2 rounded-lg p-4 text-white placeholder-gray-400 transition ${errors.email
+                                            className={`w-full bg-white/2 border-2 rounded-lg p-4 text-black placeholder-gray-400 transition ${errors.email
                                                     ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
                                                     : 'border-white/20 focus:ring-brand-green focus:border-brand-green'
                                                 }`}
