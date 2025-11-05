@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 const TimerBox: React.FC<{ value: number; label: string }> = ({ value, label }) => (
-    <div className="text-center bg-black/30 rounded-lg border border-white/20 w-20 md:w-23 shadow-inner">
+    <div className="text-center bg-black/30 rounded-lg border border-white/20 w-20 md:w-22 shadow-inner">
         <span 
-            className="text-4xl md:text-4xl font-black text-brand-yellow" 
+            className="text-3xl md:text-3xl font-black text-brand-yellow" 
             style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
         >
             {value.toString().padStart(2, '0')}
         </span>
-        <span className="block text-xs font-semibold text-white/80 uppercase tracking-wider mt-1">{label}</span>
+        <span className="block text-xs font-semibold text-white/80 uppercase tracking-wider mt-0">{label}</span>
     </div>
 );
 
@@ -44,9 +44,9 @@ const Header: React.FC = () => {
     });
 
     return (
-        <header className="bg-brand-red shadow-lg pt-5 pb-2">
+        <header className="bg-brand-red shadow-lg pt-3 pb-2">
             <div className="container mx-auto px-4">
-                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-5">
+                 <div className="flex flex-col sm:flex-row items-center justify-center gap-1 md:gap-5">
                     <h3 
                         className="text-base md:text-lg font-bold tracking-wider text-white uppercase"
                         style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.4)' }}
