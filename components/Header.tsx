@@ -51,7 +51,7 @@ const Header: React.FC = () => {
                         className="text-base md:text-lg font-bold tracking-wider text-white uppercase"
                         style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.4)' }}
                     >
-                        Oferta termina em:
+                        Faltam:
                     </h3>
                     <div className="flex items-center justify-center gap-2 md:gap-3">
                         <TimerBox value={timeLeft.days} label="Dias" />
