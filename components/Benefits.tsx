@@ -10,8 +10,6 @@ const benefits = [
     { text: 'A melhor oferta da história', icon: <StarBurstIcon className="h-7 w-7 text-white" /> },
     { text: 'Prêmios exclusivos para os primeiros', icon: <TrophyIcon className="h-7 w-7 text-white" /> },
     { text: 'Sorteios inacreditáveis', icon: <GiftIcon className="h-7 w-7 text-white" /> },
-    { text: 'Acesso estendido', icon: <CalendarIcon className="h-7 w-7 text-white" /> },
-    { text: 'E Claro… O melhor método de treinamento do Mundo', icon: <DumbbellIcon className="h-7 w-7 text-white" /> },
 ];
 
 const Benefits: React.FC = () => {
@@ -39,7 +37,7 @@ const Benefits: React.FC = () => {
                     </ul>
                     <div className="mt-10 text-center">
                         <h3 className="text-xl md:text-2xl font-black uppercase tracking-wide">
-                            SuperLive de Black Friday dia 10 de novembro às 20h
+                            Black Friday dia 10 de novembro
                         </h3>
                     </div>
                 </div>

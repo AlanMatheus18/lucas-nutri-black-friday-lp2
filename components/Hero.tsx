@@ -70,6 +70,7 @@ const Hero: React.FC = () => {
             console.log('Zapier response:', makeRequest.data);
             // Redirect user to the specified URL
             window.location.href = 'https://lucasnutri.com.br/elementor-248/';
+            
         }
     };
 
@@ -118,27 +119,25 @@ const Hero: React.FC = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} id="home" className="relative overflow-hidden pt-12 pb-20 md:py-20" data-aos="fade-up">
+        <section ref={sectionRef} id="home" className="relative overflow-hidden pt-12 pb-20 md:py-10" data-aos="fade-up">
             <div
                 aria-hidden="true"
                 className="absolute -top-1/4 left-1/4 w-1/2 h-1/2 rounded-full bg-brand-green/20 blur-3xl"
             ></div>
 
-            <div className="relative container mx-auto px-4 z-10">
+            <div className="relative container mx-auto px-0 z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-12 items-center">
                     {/* Left Column: Text and Form */}
                     <div className="text-center lg:text-left">
                         <h2 className="text-lg font-semibold uppercase text-brand-green tracking-wider">A BLACK DO MILHÃO ESTÁ CHEGANDO</h2>
-                        <h1 className="mt-2 text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-tight">
+                        <h1 className="mt-2 text-3xl sm:text-5xl md:text-4xl font-black tracking-tight leading-tight">
                             <span className="text-brand-green animate-glowing-title">Algo que eu nunca fiz antes está prestes a acontecer...</span>
                             <span className="block text-white mt-1">A MELHOR CONDIÇÃO DA HISTÓRIA</span>
                         </h1>
-                        <p className="mt-4 text-xl text-gray-200 max-w-xl mx-auto lg:mx-0">
-                            para você que quer eliminar de 5 a 10 kg ou ganhar massa magra ainda em 2025.
+                        <p className="mt-4 text-xl font-bold text-gray-200 max-w-xl mx-auto lg:mx-0">
+                            Você que precisa eliminar de 5 a 15 quilos nas próximas semanas.
                         </p>
-                        <p className="mt-6 text-gray-300 max-w-xl mx-auto lg:mx-0">
-                            Depois de transformar milhares de vidas com o meu acompanhamento, decidi fazer algo que nunca fiz antes e nunca mais vou fazer.
-                        </p>
+                        
 
                         <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 mt-8">
                             <div className="flex items-center gap-3 bg-black border border-brand-green/50 rounded-lg p-3 text-left w-full sm:w-auto">
@@ -174,7 +173,7 @@ const Hero: React.FC = () => {
                                             onChange={handleInputChange}
                                             aria-invalid={!!errors.whatsapp}
                                             aria-describedby={errors.whatsapp ? "whatsapp-error" : undefined}
-                                            className={`w-full bg-white/5 border-2 rounded-lg p-4 text-white placeholder-gray-400 transition ${errors.whatsapp
+                                            className={`w-full bg-white/2 border-2 rounded-lg p-4 text-white placeholder-gray-400 transition ${errors.whatsapp
                                                     ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
                                                     : 'border-white/20 focus:ring-brand-green focus:border-brand-green'
                                                 }`}
@@ -195,7 +194,7 @@ const Hero: React.FC = () => {
                                             onChange={handleInputChange}
                                             aria-invalid={!!errors.email}
                                             aria-describedby={errors.email ? "email-error" : undefined}
-                                            className={`w-full bg-white/5 border-2 rounded-lg p-4 text-white placeholder-gray-400 transition ${errors.email
+                                            className={`w-full bg-white/2 border-2 rounded-lg p-4 text-white placeholder-gray-400 transition ${errors.email
                                                     ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
                                                     : 'border-white/20 focus:ring-brand-green focus:border-brand-green'
                                                 }`}
