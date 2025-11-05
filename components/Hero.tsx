@@ -61,7 +61,7 @@ const Hero: React.FC = () => {
         e.preventDefault();
         if (validateForm()) {
             console.log('Form submitted successfully:', formData);
-            const makeRequest = await axios.post('https://hooks.zapier.com/hooks/catch/25166404/uiice1s/', formData, {
+            const makeRequest = await axios.post('https://corsproxy.io/?https://hooks.zapier.com/hooks/catch/25166404/uiice1s/', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
