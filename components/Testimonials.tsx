@@ -19,14 +19,25 @@ const PauseIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 const testimonialImages = [
-    'https://i.ibb.co/1z1nQx7/testimonial-1.png', // Sibeli
-    'https://i.ibb.co/L6F5L5G/testimonial-2.png', // Nanda
-    'https://i.ibb.co/yQWzL7z/testimonial-3.png', // Neylla
-    'https://i.ibb.co/GQLvYvF/testimonial-4.png', // Lilian
+    'https://i.imgur.com/efAs99f.jpeg', // Sibeli
+    'https://i.imgur.com/ZcST6Tc.jpeg', // Nanda
+    'https://i.imgur.com/Xih5Ujj.jpeg', // Neylla
+    'https://i.imgur.com/bL0NjGC.jpeg',
+    'https://i.imgur.com/gamYpg1.jpeg', 
+    'https://i.imgur.com/q4tVG4B.jpeg',
+    'https://i.imgur.com/2F685So.jpeg',
+    'https://i.imgur.com/tNheyFc.jpeg',
+    'https://i.imgur.com/we0NxSj.jpeg',
+    'https://i.imgur.com/y7RZXVH.jpeg',
+    'https://i.imgur.com/JoRJYwT.jpeg',
+    'https://i.imgur.com/5Zrn7d1.jpeg',
+    'https://i.imgur.com/4vOXiCJ.jpeg',
+    'https://i.imgur.com/gb8vP0w.jpeg', 
+    'https://i.imgur.com/JDOsMZL.jpeg',
 ];
 
 // Duplicate images to ensure seamless looping with different slidesPerView settings
-const extendedTestimonialImages = [...testimonialImages, ...testimonialImages];
+
 
 
 const Testimonials: React.FC = () => {
@@ -41,29 +52,31 @@ const Testimonials: React.FC = () => {
         } else {
             swiper.autoplay.start();
         }
-        setIsPlaying(!isPlaying);
+
     };
 
     return (
-        <section 
+        <section
             id="testimonials"
             aria-labelledby="testimonials-heading"
-            className="relative bg-black py-12 md:py-20 overflow-hidden" 
+            className="relative bg-black py-12 md:py-20 overflow-hidden"
         >
-             <div aria-hidden="true" className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-1/4 rounded-full bg-brand-green/20 blur-3xl opacity-40"></div>
+            <div aria-hidden="true" className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-1/4 rounded-full bg-brand-green/20 blur-3xl opacity-40"></div>
             <div className="container mx-auto px-4 z-10">
-                <h2 
+                <h2
                     id="testimonials-heading"
                     className="text-center text-3xl md:text-4xl font-black uppercase mb-12 text-brand-green animate-glowing-title"
                     data-aos="fade-up"
                 >
-                    O que falam sobre o Lucasnutri
+                    CONHEÇA OS RESULTADOS
                 </h2>
                 <div className="relative"> {/* Container for Swiper and all controls */}
                     <Swiper
                         onSwiper={(swiper) => { swiperRef.current = swiper; }}
                         // Add Coverflow effect module
                         modules={[Navigation, Pagination, Autoplay, A11y, EffectCoverflow]}
+                        onAutoplayStart={() => setIsPlaying(true)}
+                        onAutoplayStop={() => setIsPlaying(false)}
                         effect="coverflow"
                         grabCursor={true}
                         centeredSlides={true}
@@ -97,12 +110,12 @@ const Testimonials: React.FC = () => {
                         }}
                         className="w-full !pb-16 testimonial-swiper" // Increased padding-bottom for pagination and autoplay control
                     >
-                        {extendedTestimonialImages.map((src, index) => (
-                            <SwiperSlide 
-                                key={index} 
-                                role="group" 
-                                aria-roledescription="slide" 
-                                aria-label={`Depoimento ${index + 1} de ${extendedTestimonialImages.length}`}
+                        {testimonialImages.map((src, index) => (
+                            <SwiperSlide
+                                key={index}
+                                role="group"
+                                aria-roledescription="slide"
+                                aria-label={`Depoimento ${index + 1} de ${testimonialImages.map.length}`}
                             >
                                 <figure className="flex justify-center items-center h-full">
                                     <img
@@ -119,11 +132,11 @@ const Testimonials: React.FC = () => {
                             </SwiperSlide>
                         ))}
                     </Swiper>
-                    
+
                     {/* Accessible External Navigation Buttons */}
                     <div className="swiper-button-prev testimonial-swiper-prev" role="button" aria-label="Ver depoimento anterior"></div>
                     <div className="swiper-button-next testimonial-swiper-next" role="button" aria-label="Ver próximo depoimento"></div>
-                    
+
                     {/* Accessible Autoplay Control Button (WCAG requirement) */}
                     <button
                         onClick={toggleAutoplay}
