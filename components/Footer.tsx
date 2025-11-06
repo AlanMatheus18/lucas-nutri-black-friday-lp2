@@ -16,7 +16,9 @@ const Footer: React.FC = () => {
                         <InstagramIcon className="h-6 w-6" />
                     </a>
                     <a href="https://www.tiktok.com/@lucasrabelonutri?_r=1&_t=ZS-918a0bl94So" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="text-gray-400 hover:text-white transform hover:scale-110 transition-all duration-300">
-                        <SiTiktok className="h-6 w-6" />
+                        <span className="inline-block h-6 w-6">
+                            <SiTiktok size={24} />
+                        </span>
                     </a>
                 </div>
                 <p className="text-base text-gray-400 mb-4">

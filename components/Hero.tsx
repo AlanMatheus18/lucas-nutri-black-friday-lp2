@@ -24,6 +24,8 @@ const ErrorIcon: React.FC<{ className?: string }> = ({ className = '' }) => (
 const Hero: React.FC = () => {
     // State for form fields and errors
     const [formData, setFormData] = useState({ whatsapp: '', email: '' });
+    // UTMs captured from URL (utm_source, utm_medium, utm_campaign, utm_term, utm_content) + fbclid
+    const [utms, setUtms] = useState<Record<string, string>>({});
     const [errors, setErrors] = useState({ whatsapp: '', email: '' });
     const imageContainerRef = useRef<HTMLDivElement>(null);
     const sectionRef = useRef<HTMLElement>(null);
@@ -61,13 +63,68 @@ const Hero: React.FC = () => {
         e.preventDefault();
         if (validateForm()) {
             console.log('Form submitted successfully:', formData);
-            const makeRequest = await axios.post('https://corsproxy.io/?https://hooks.zapier.com/hooks/catch/25166404/uiice1s/', formData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
+            // Build payload including UTMs
+            const payload = {
+                ...formData,
+                utm_source: utms.utm_source || '',
+                utm_medium: utms.utm_medium || '',
+                utm_campaign: utms.utm_campaign || '',
+                utm_term: utms.utm_term || '',
+                utm_content: utms.utm_content || '',
+                fbclid: utms.fbclid || ''
+            };
+
+            try {
+                const makeRequest = await axios.post('https://corsproxy.io/?https://hooks.zapier.com/hooks/catch/25166404/uiice1s/', payload, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    }
+                });
+                console.log('Zapier response:', makeRequest.data);
+            } catch (err) {
+                console.warn('Zapier POST failed, continuing flow', err);
+            }
+            // Also send a server-side conversion event (Lead) to our track.php endpoint
+            try {
+                const trackPayload = {
+                    event_name: 'Lead',
+                    event_source_url: window.location.href,
+                    // user_data: hashed server-side; we'll send raw values so server can hash
+                    user_data: {
+                        email: formData.email,
+                        phone: formData.whatsapp
+                    },
+                    // pass UTMs as custom_data so FB custom_data can store it
+                    custom_data: {
+                        utm_source: utms.utm_source || '',
+                        utm_medium: utms.utm_medium || '',
+                        utm_campaign: utms.utm_campaign || '',
+                        utm_term: utms.utm_term || '',
+                        utm_content: utms.utm_content || '',
+                        fbclid: utms.fbclid || ''
+                    }
+                };
+
+                const body = JSON.stringify(trackPayload);
+
+                // Prefer navigator.sendBeacon for background, non-blocking send (works well before redirect)
+                if (typeof navigator !== 'undefined' && typeof (navigator as any).sendBeacon === 'function') {
+                    const blob = new Blob([body], { type: 'application/json' });
+                    (navigator as any).sendBeacon('/track.php', blob);
+                } else {
+                    // fallback: fetch with keepalive
+                    fetch('/track.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body,
+                        keepalive: true
+                    }).catch(err => console.warn('track.php fetch failed', err));
                 }
-            });
-            console.log('Zapier response:', makeRequest.data);
+            } catch (err) {
+                console.warn('Failed to send lead event to track.php', err);
+            }
+
             // Redirect user to the specified URL
             window.location.href = 'https://lucasnutri.com.br/elementor-248/';
             
@@ -118,24 +175,41 @@ const Hero: React.FC = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Extract UTMs from URL once on mount
+    useEffect(() => {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const extracted: Record<string, string> = {};
+            ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(k => {
+                const v = params.get(k);
+                if (v) extracted[k] = v;
+            });
+            setUtms(extracted);
+            if (Object.keys(extracted).length) console.log('Captured UTMs:', extracted);
+        } catch (err) {
+            // window might be undefined in some SSR contexts; ignore
+            console.warn('Could not parse UTMs', err);
+        }
+    }, []);
+
     return (
-        <section ref={sectionRef} id="home" className="relative overflow-hidden pt-12 pb-20 md:py-10" data-aos="fade-up">
+    <section ref={sectionRef} id="home" className="relative overflow-hidden pt-0 md:pt-12 pb-20 md:pb-10" data-aos="fade-up">
             <div
                 aria-hidden="true"
                 className="absolute -top-1/4 left-1/4 w-1/2 h-1/2 rounded-full bg-brand-green/20 blur-3xl"
             ></div>
 
             <div className="relative container mx-auto px-0 z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-0 lg:gap-y-12 items-center">
                     {/* Left Column: Text and Form */}
-                    <div className="text-center lg:text-left">
+                    <div className="text-center lg:text-left order-last lg:order-first relative z-20 -mt-40 md:-mt-16 lg:mt-0">
                         <h2 className="text-lg font-semibold uppercase text-brand-green tracking-wider">A BLACK DO MILHÃO ESTÁ CHEGANDO</h2>
                         <h1 className="mt-2 text-3xl sm:text-5xl md:text-4xl font-black tracking-tight leading-tight">
                             <span className="text-brand-green animate-glowing-title">Algo que eu nunca fiz antes está prestes a acontecer...</span>
                             <span className="block text-white mt-1">A MELHOR CONDIÇÃO DA HISTÓRIA</span>
                         </h1>
-                        <p className="mt-4 text-xl font-bold text-gray-200 max-w-xl mx-auto lg:mx-0">
-                            Você que precisa eliminar de 5 a 15 quilos nas próximas semanas.
+                        <p className="text-xl font-bold text-gray-200 max-w-xl mx-auto lg:mx-0">
+                            Para você que precisa eliminar de 5 a 15 quilos nas próximas semanas.
                         </p>
                         
 
@@ -156,7 +230,7 @@ const Hero: React.FC = () => {
                         </div>
 
                         <p className="mt-8 text-gray-200 max-w-md mx-auto lg:mx-0">
-                            Garanta seu acesso agora e fique por dentro antes de todo mundo.
+                            <strong>Quer a Melhor Condição da História? 🤩 Preencha abaixo e entre no grupo! 👇</strong>
                         </p>
 
                         <div id="form-container" className="mt-4 max-w-md mx-auto lg:mx-0">
@@ -213,20 +287,29 @@ const Hero: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Right Column: Image */}
+                    {/* Right Column: Image (mobile: top centered with bottom gradient overlay) */}
                     <div
                         ref={imageContainerRef}
-                        className="relative flex justify-center items-end h-[500px] lg:h-[700px] will-change-transform"
+                        className="relative flex justify-center items-end h-[500px] lg:h-[700px] will-change-transform order-first lg:order-last z-10"
                     >
-                        <img
-                            src="https://i.imgur.com/QfiSMp7.jpeg"
-                            alt="Lucas Rabelo, nutricionista, em pose de confiança para a campanha Black Friday do Milhão."
-                            className="w-full h-full max-w-md md:max-w-lg lg:max-w-none object-contain lg:absolute lg:bottom-0"
-                            width="1080"
-                            height="1080"
-                            loading="lazy"
-                            decoding="async"
-                        />
+                        {/* Image wrapper to allow overlay and mobile positioning */}
+                        <div className="relative w-full h-full flex justify-center items-start lg:items-end">
+                            <img
+                                src="https://i.imgur.com/SQP5HzB.jpeg"
+                                alt="Lucas Rabelo, nutricionista, em pose de confiança para a campanha Black Friday do Milhão."
+                                className="w-full h-full max-w-md md:max-w-lg lg:max-w-none object-cover lg:object-contain object-top lg:object-bottom lg:absolute lg:bottom-0"
+                                width="1080"
+                                height="1080"
+                                loading="lazy"
+                                decoding="async"
+                            />
+
+                            {/* Gradient overlay: visible only on small screens to create smooth transition to title
+                                - h-1/2 cobre metade inferior da imagem (esconde o 'final' da foto)
+                                - via-black garante que a parte inferior fique totalmente preta antes de subir para transparente
+                            */}
+                            <div className="pointer-events-none absolute left-0 right-0 bottom-0 h-1/2 bg-gradient-to-t from-black via-black/90 to-transparent lg:hidden z-15" />
+                        </div>
                     </div>
                 </div>
             </div>

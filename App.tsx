@@ -19,6 +19,21 @@ const App: React.FC = () => {
                 easing: 'ease-in-out-quad',
             });
         }
+        // Send PageView to server-side endpoint only on first visit (per browser)
+        try {
+            const seenKey = 'bf_lp_seen';
+            const alreadySeen = typeof window !== 'undefined' && window.localStorage && window.localStorage.getItem(seenKey);
+            if (!alreadySeen) {
+                fetch('/track.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ event_name: 'PageView', event_source_url: window.location.href })
+                }).catch(err => console.warn('track.php fetch failed', err));
+                try { window.localStorage.setItem(seenKey, '1'); } catch(e) { /* ignore */ }
+            }
+        } catch (err) {
+            console.warn('track call failed', err);
+        }
     }, []);
 
     return (
