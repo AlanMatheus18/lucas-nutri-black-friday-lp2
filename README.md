@@ -1,20 +1,57 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 🚀 Black Friday Landing Page - Lucas Nutri
 
-# Run and deploy your AI Studio app
+Landing page desenvolvida para campanha de **Black Friday**, com foco em **alta conversão**, captura de leads e direcionamento para grupo VIP.
 
-This contains everything you need to run your app locally.
+🔗 Acesse o projeto: https://black-fridaylp.netlify.app/
 
-View your app in AI Studio: https://ai.studio/apps/drive/1c_A7-UhgsUf8jQ5VcUibun8tySDgfodg
+---
 
-## Run Locally
+## 📌 Sobre o Projeto
 
-**Prerequisites:**  Node.js
+Este projeto consiste em uma landing page promocional voltada para campanhas sazonais (Black Friday), com objetivo de:
 
+* Captar leads (nome, contato)
+* Direcionar usuários para grupo VIP (WhatsApp)
+* Apresentar oferta com alto poder de conversão
+* Utilizar gatilhos mentais (escassez, urgência, prova social)
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Landing pages desse tipo são amplamente utilizadas em estratégias de marketing digital para aumentar vendas em períodos promocionais.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+* ⚛️ React
+* ⚡ Vite
+* 🎨 Tailwind CSS (via CDN)
+* 📦 JavaScript (ES Modules)
+* 🎞️ AOS (Animate On Scroll)
+* 🎠 Swiper.js
+* 🌐 HTML5 + CSS3
+
+---
+
+## 📁 Estrutura do Projeto
+
+```bash
+├── components/
+├── dist/              # Build de produção
+│   ├── assets/
+│   └── index.html
+├── node_modules/
+├── App.tsx
+├── index.html
+├── index.tsx
+├── vite.config.ts
+├── package.json
+```
+
+---
+
+## 🎯 Funcionalidades
+
+* 📱 Responsivo (mobile first)
+* 🎯 Foco em conversão
+* ⏳ Gatilhos de escassez
+* 🎥 Integração com scripts externos (Pixel, animações)
+* ⚡ Carregamento rápido (Vite)
